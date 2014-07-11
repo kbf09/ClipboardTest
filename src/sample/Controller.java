@@ -4,13 +4,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.lang.reflect.Proxy;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -21,6 +26,8 @@ public class Controller implements Initializable{
     @FXML ScrollPane scrollPane;
     @FXML ListView listView;
     @FXML TextField ipAddress;
+    @FXML
+    javafx.scene.control.Label ipLabel;
 
     private Toolkit kit;
     private Clipboard clip;
@@ -45,6 +52,9 @@ public class Controller implements Initializable{
 
         listView.setItems(listRecords);
 
+        ServerThread st = new ServerThread();
+        st.start();
+
     }
 
     @FXML
@@ -59,28 +69,20 @@ public class Controller implements Initializable{
 
     @FXML
     public void startConnection() {
-        int port; // ポート番号
-        int timeout_msec = 10000; // accept() のタイムアウトは10秒にしてみる。
 
-        port = 50000; // 例えばポート番号は 50000 番にする。
+        BufferedReader br;
+        try {
 
-        try{
-            // サーバソケットの作成
-            ServerSocket svsock = new ServerSocket(port);
-            svsock.setSoTimeout(timeout_msec);  // ※必要があるときのみ設定する。
+            sock = new Socket(ipAddress.getText(), 12354);
+            OutputStream out = sock.getOutputStream();
 
-            // クライアントからの接続を受け付ける。
-            // ※クライアントからの接続がくるまでここでブロックする。
+            br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 
-            Socket sock = svsock.accept();
-
-            // クライアントと接続されたソケットを利用して処理を行う。
+            System.out.println(br.readLine());
 
         } catch (Exception e) {
-            // accept() タイムアウト時の処理をする。
-
+            e.printStackTrace();
         }
-        ipAddress.getText();
     }
 
 

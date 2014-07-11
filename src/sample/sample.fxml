@@ -15,11 +15,13 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <ListView fx:id="listView" layoutX="6.0" prefHeight="400.0" prefWidth="487.0" />
-               </children></AnchorPane>
+               </children>
+          </AnchorPane>
         </content>
       </ScrollPane>
       <Button layoutX="519.0" layoutY="344.0" mnemonicParsing="false" onAction="#listReview" text="更新" />
       <Button layoutX="511.0" layoutY="62.0" mnemonicParsing="false" onAction="#startConnection" text="通信！" />
-      <TextField layoutX="494.0" layoutY="30.0" prefHeight="26.0" prefWidth="94.0" />
+      <TextField fx:id="ipAddress" layoutX="494.0" layoutY="30.0" prefHeight="26.0" prefWidth="94.0" />
+      <Label fx:id="ipLabel" layoutX="526.0" layoutY="119.0" text="Label" />
    </children>
 </Pane>
