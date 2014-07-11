@@ -11,10 +11,7 @@ import javafx.scene.control.TextField;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.lang.reflect.Proxy;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -53,7 +50,7 @@ public class Controller implements Initializable{
         listView.setItems(listRecords);
 
         ServerThread st = new ServerThread();
-        st.start();
+        //st.start();
 
     }
 
@@ -72,14 +69,13 @@ public class Controller implements Initializable{
 
         BufferedReader br;
         try {
-
+System.out.println("ip");
+            ipLabel.setText(ipAddress.getText());
             sock = new Socket(ipAddress.getText(), 12354);
             OutputStream out = sock.getOutputStream();
 
-            br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-
-            System.out.println(br.readLine());
-
+            DataOutputStream os = new DataOutputStream(sock.getOutputStream());
+            os.writeBytes("Hello");
         } catch (Exception e) {
             e.printStackTrace();
         }
